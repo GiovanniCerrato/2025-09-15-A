@@ -28,6 +28,26 @@ class Model:
             self._graph.add_edge(e.p1, e.p2, weight=e.weight)
         return
 
+    def topTreArchi(self):
+        listaArchi = list(self._graph.edges(data = True))
+        listaArchi.sort(key=lambda x:x[2]["weight"],reverse=True)
+        return listaArchi[:3]
+
+    def getNumCC(self):
+        return nx.number_connected_components(self._graph)
+
+    def getMaxCC(self):
+        compMax = []
+        for n in self._graph.nodes():
+            if len(nx.node_connected_component(self._graph,n)) > len(compMax):
+                compMax = list(nx.node_connected_component(self._graph,n))
+        listaNodiDegree = []
+        for n in compMax:
+            degree = self._graph.degree(n)
+            listaNodiDegree.append((n,degree))
+        listaNodiDegree.sort(key=lambda x:x[1],reverse=True)
+        return listaNodiDegree
+
     def getNumNodiArchi(self):
         return self._graph.number_of_nodes(), self._graph.number_of_edges()
 

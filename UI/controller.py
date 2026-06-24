@@ -39,11 +39,24 @@ class Controller:
         self._view.txt_result.controls.append(ft.Text(f"Numero di archi: {nArchi}"))
         self._view._btnstampa.disabled = False
         self._view._btnCerca.disabled = False
-
         self._view.update_page()
         return
     def handleDettagli(self, e):
-        pass
+        self._view.txt_result.clean()
+        topTreArchi = self._model.topTreArchi()
+        self._view.txt_result.controls.append(ft.Text("Archi di peso maggiore:", color="red"))
+        for a in topTreArchi:
+            self._view.txt_result.controls.append(ft.Text(f"{a[0].driverRef} -> {a[1].driverRef} ({a[2]["weight"]})"))
+        nCC = self._model.getNumCC()
+        self._view.txt_result.controls.append(ft.Text(f"Il grafo ha {nCC} componenti connesse", color="red"))
+        compMax = self._model.getMaxCC()
+        self._view.txt_result.controls.append(ft.Text(f"Componente più grande: {len(compMax)} nodi", color="red"))
+        for n, degree in compMax:
+            self._view.txt_result.controls.append(ft.Text(f"{n} (grado= {degree})"))
+
+        self._view.update_page()
+
+        return
     def handleCerca(self, e):
         pass
 

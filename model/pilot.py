@@ -15,4 +15,4 @@ class Pilot:
         return hash(self.driverId)
 
     def __str__(self):
-        return f"{self.driverRef} ({self.driverId})"
+        return f"{self.driverRef} ({self.driverId}) -- DoB: {self.dob}"
